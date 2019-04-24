@@ -9,15 +9,30 @@ void printIntArray(int* array, int size) {
    printf("]\n");
 }
 
-int main(void) {
+int main(int argc, char** argv) {
 
-   int nums[20] = {12,532,1,284,294,201,939,1823,3910,3827,48,2912,481,9382,1823,583,1923,921,192,482};
+   if (argc < 2) {
+      printf("Usage: %s <size> <?min> <?max>\n", argv[0]);
+      return 0;
+   }
 
-   const int size = sizeof(nums) / sizeof(nums[0]);
+   const int size = atoi(argv[1]);
+
+   int min = 0;
+   int max = 500;
+
+   if (argc >= 3) min = atoi(argv[2]);
+   if (argc >= 4) max = atoi(argv[3]);
+
+   int nums[size];
+
+   for (int i = 0; i < size; i++) {
+      nums[i] = rand() % max + min;
+   }
 
    printIntArray(nums, size);
 
-   for (int i = 0; i < size; i++) {
+   for (int i = 0; i < size; i++) 
       for (int j = 0; j < size - i - 1; j++) {
          if (nums[j] > nums[j + 1]) {
             const int temp = nums[j + 1];
@@ -25,7 +40,6 @@ int main(void) {
             nums[j] = temp;
          }
       }
-   }
 
    printIntArray(nums,size);
    
